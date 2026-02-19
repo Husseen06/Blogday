@@ -1,103 +1,171 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import PostComments from '@/components/PostComments.vue'
 
 const props = defineProps({
   posts: {
     type: Array,
     required: true,
   },
+  title: {
+    type: String,
+    default: 'Posts',
+  },
+  subtitle: {
+    type: String,
+    default: '',
+  },
+  emptyMessage: {
+    type: String,
+    default: 'No posts yet. Add your first post to get started.',
+  },
+  showOtherPostsLink: {
+    type: Boolean,
+    default: false,
+  },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+  error: {
+    type: String,
+    default: '',
+  },
 })
 
-const postsWithImages = computed(() =>
-  props.posts.map((post) => {
-    if (post.fileInput && post.fileInput instanceof File) {
-      return { ...post, image: URL.createObjectURL(post.fileInput) }
-    }
-    return { ...post, image: post.image || null }
-  }),
+const emit = defineEmits(['update-post'])
+const currentUser = ref({ firstName: 'Guest' })
+const router = useRouter()
+
+onMounted(() => {
+  const session = localStorage.getItem('blogday.session')
+  if (session) {
+    try {
+      currentUser.value = JSON.parse(session)
+    } catch (e) {}
+  }
+})
+
+const normalizedPosts = computed(() =>
+  props.posts
+    .map((post, index) => {
+      const image =
+        post.image ||
+        (post.fileInput && post.fileInput instanceof File
+          ? URL.createObjectURL(post.fileInput)
+          : null)
+
+      return {
+        id: post.id || index,
+        postTitle: post.postTitle || post.title || 'Untitled post',
+        postDate: post.postDate || post.date || '',
+        postAuthor: post.postAuthor || post.author || 'Unknown',
+        category: post.category || 'General',
+        description: post.description || '',
+        content: post.content || '',
+        image,
+        comments: post.comments || [],
+      }
+    })
+    .sort((a, b) => new Date(b.postDate || 0) - new Date(a.postDate || 0)),
 )
+
+const totalPosts = computed(() => normalizedPosts.value.length)
+
+const formattedDate = (value) => {
+  if (!value) return 'No date'
+  const parsed = new Date(value)
+  if (Number.isNaN(parsed.getTime())) return value
+  return parsed.toLocaleDateString()
+}
+
+function onAddComment(post, newComment) {
+  emit('update-post', { postId: post.id, comment: newComment })
+}
+
+function goToPost(id) {
+  router.push({ name: 'post-detail', params: { id } })
+}
 </script>
 
 <template>
-  <section class="py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-manrope text-4xl font-bold text-gray-900 text-center mb-16">
-        {{ posts.length }} Unique Posts Available
-      </h2>
+  <section class="py-4">
+    <div class="mb-8 rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">Overview</p>
+      <h2 class="mt-2 text-2xl font-bold text-slate-900">{{ title }}</h2>
+      <p v-if="subtitle" class="mt-2 text-sm text-slate-600">{{ subtitle }}</p>
+      <p class="mt-2 text-sm font-medium text-slate-500">{{ totalPosts }} posts</p>
+      <RouterLink
+        v-if="showOtherPostsLink"
+        to="/other-posts"
+        class="mt-3 inline-block text-sm font-semibold text-cyan-700 underline-offset-2 hover:underline"
+      >
+        Explore other posts
+      </RouterLink>
+    </div>
 
-      <div class="flex flex-row min-h-screen justify-center">
-        <div class="group border border-gray-300 rounded-2xl flex flex-col h-full mb-16">
-          <div class="flex items-center">
-            <img
-              src="@/assets/grappigestockimg.jpg"
-              alt="Welcome to Blogday"
-              class="rounded-t-2xl w-500 object-cover h-95"
-            />
+    <div
+      v-if="isLoading"
+      class="rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-slate-500"
+    >
+      Loading posts...
+    </div>
+
+    <div
+      v-else-if="error"
+      class="rounded-xl border border-red-200 bg-red-50 px-4 py-8 text-center text-sm text-red-700"
+    >
+      {{ error }}
+    </div>
+
+    <div
+      v-else-if="totalPosts === 0"
+      class="rounded-xl border border-cyan-100 bg-white px-4 py-10 text-center text-slate-500"
+    >
+      {{ emptyMessage }}
+    </div>
+
+    <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <article
+        v-for="post in normalizedPosts"
+        :key="post.id"
+        class="group overflow-hidden rounded-2xl border border-cyan-100 bg-white shadow-sm transition hover:-translate-y-1 hover:border-cyan-300 hover:shadow-md"
+      >
+        <div @click="goToPost(post.id)" class="cursor-pointer">
+          <img
+            v-if="post.image"
+            :src="post.image"
+            alt="Post image"
+            class="h-56 w-full object-cover"
+          />
+          <div v-else class="flex h-56 w-full items-center justify-center bg-cyan-50 text-cyan-400">
+            <span class="text-sm font-medium">No image</span>
           </div>
-          <div
-            class="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50 flex-1 flex flex-col"
-          >
-            <span class="text-indigo-600 font-medium mb-3 block">2024-01-01</span>
-            <h4 class="text-xl text-gray-900 font-medium leading-8 mb-5">Welcome to Blogday!</h4>
-            <p class="text-gray-500 leading-6 mb-10">
-              This is your first post. Feel free to add more using the "Add Post" button above!
+        </div>
+
+        <div class="p-5">
+          <div class="mb-2 flex items-center justify-between gap-3">
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              {{ formattedDate(post.postDate) }}
             </p>
-            <span class="text-slate-700 mt-auto"
-              >Start sharing your thoughts and updates with the world.</span
-            >
+            <span class="rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-semibold text-cyan-800">
+              {{ post.category }}
+            </span>
           </div>
-        </div>
-      </div>
-
-      <div v-if="posts.length === 0" class="text-center text-gray-400 mt-10">
-        No posts yet. Click "Add Post" to create one!
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div
-          v-for="(post, idx) in postsWithImages"
-          :key="idx"
-          class="group border border-gray-300 rounded-2xl flex flex-col h-full"
-        >
-          <div class="flex items-center">
-            <img
-              v-if="post.image"
-              :src="post.image"
-              alt="Post image"
-              class="rounded-t-2xl w-full object-cover h-64"
-            />
-            <div
-              v-else
-              class="bg-gray-200 rounded-t-2xl w-full h-64 flex items-center justify-center text-gray-400"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-16 h-16"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 7v10a4 4 0 004 4h10a4 4 0 004-4V7a4 4 0 00-4-4H7a4 4 0 00-4 4z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div
-            class="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50 flex-1 flex flex-col"
+          <h3
+            class="mb-2 cursor-pointer text-xl font-semibold text-slate-900 transition hover:text-cyan-700"
+            @click="goToPost(post.id)"
           >
-            <span class="text-indigo-600 font-medium mb-3 block">{{ post.postDate }}</span>
-            <h4 class="text-xl text-gray-900 font-medium leading-8 mb-5">{{ post.postTitle }}</h4>
-            <p class="text-gray-500 leading-6 mb-10">{{ post.description }}</p>
-            <span class="text-slate-700 mt-auto">{{ post.content }}</span>
-            <div class="mt-4 text-sm text-gray-400">By {{ post.postAuthor || 'Unknown' }}</div>
-          </div>
+            {{ post.postTitle }}
+          </h3>
+          <p class="mb-4 line-clamp-2 text-sm text-slate-600">{{ post.description }}</p>
+          <p class="line-clamp-3 text-sm text-slate-700">{{ post.content }}</p>
+          <p class="mt-4 text-xs font-medium uppercase tracking-wide text-slate-500">
+            By {{ post.postAuthor }}
+          </p>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 </template>

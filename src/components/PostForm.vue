@@ -1,24 +1,32 @@
 <script setup>
 import { reactive, ref } from 'vue'
 
-const post = reactive({
+const emit = defineEmits(['add', 'cancel'])
+const submitError = ref('')
+const filePreview = ref(null)
+const fileInputEl = ref(null)
+
+const form = reactive({
+  postID: null,
   postTitle: '',
   postDate: new Date().toISOString().slice(0, 10),
-  postAuthor: '',
+  postAuthor:
+    'firstName' in JSON.parse(localStorage.getItem('blogday.session') || '{}')
+      ? JSON.parse(localStorage.getItem('blogday.session')).firstName
+      : 'Guest',
+  category: 'General',
   description: '',
   content: '',
   action: 'Save and Publish',
   fileInput: null,
 })
 
-const filePreview = ref(null)
-
-const emit = defineEmits(['add'])
-
 const handleFileUpload = (event) => {
   const file = event.target.files[0]
+  submitError.value = ''
+
   if (file) {
-    post.fileInput = file
+    form.fileInput = file
 
     if (file.type.startsWith('image/')) {
       const reader = new FileReader()
@@ -29,84 +37,185 @@ const handleFileUpload = (event) => {
     } else {
       filePreview.value = null
     }
+  } else {
+    form.fileInput = null
+    filePreview.value = null
   }
 }
 
-const addPost = () => {
-  emit('add', { ...post })
-
-  post.postTitle = ''
-  post.postAuthor = ''
-  post.description = ''
-  post.content = ''
-  post.fileInput = null
+const resetForm = () => {
+  form.postID = null
+  form.postTitle = ''
+  form.category = 'General'
+  form.description = ''
+  form.content = ''
+  form.action = 'Save and Publish'
+  form.fileInput = null
   filePreview.value = null
+  if (fileInputEl.value) fileInputEl.value.value = ''
+}
 
-  const input = document.getElementById('file_input')
-  if (input) input.value = ''
+const addPost = () => {
+  submitError.value = ''
+
+  try {
+    let imageBase64 = null
+    if (form.fileInput && form.fileInput.type.startsWith('image/')) {
+      imageBase64 = filePreview.value
+    }
+    form.postAutor = JSON.parse(localStorage.getItem('blogday.session'))?.firstName
+    const newPost = {
+      id: form.postID || Date.now(),
+      title: form.postTitle,
+      date: form.postDate,
+      author: form.postAuthor,
+      category: form.category,
+      description: form.description,
+      content: form.content,
+      image: imageBase64,
+      status: form.action === 'Save and Publish' ? 'published' : 'draft',
+      createdAt: new Date().toISOString(),
+    }
+
+    emit('add', newPost)
+    resetForm()
+  } catch (err) {
+    console.error('Error creating local post:', err)
+    submitError.value = 'Failed to add post. Please try again.'
+  }
+}
+
+const cancel = () => {
+  resetForm()
+  emit('cancel')
 }
 </script>
 
 <template>
-  <form @submit.prevent="addPost" class="max-w-xl mx-auto p-4 bg-white rounded shadow">
-    <h2 class="text-2xl font-bold mb-4">Add New Post</h2>
+  <form @submit.prevent="addPost" class="rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
+    <h2 class="mb-6 text-2xl font-bold text-slate-900">Add New Post</h2>
 
     <div class="mb-4">
-      <label class="block mb-1">Post Title</label>
-      <input v-model="post.postTitle" type="text" class="border p-2 w-full" required />
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Title</label>
+      <input
+        v-model="form.postTitle"
+        type="text"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none ring-0 transition focus:border-cyan-500"
+        required
+      />
     </div>
 
     <div class="mb-4">
-      <label class="block mb-1">Post Date</label>
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Date</label>
       <input
-        v-model="post.postDate"
+        v-model="form.postDate"
         type="date"
-        class="border p-2 w-full bg-gray-100"
+        class="w-full rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-slate-600"
         readonly
         disabled
       />
     </div>
 
     <div class="mb-4">
-      <label class="block mb-1">Post Author</label>
-      <input v-model="post.postAuthor" type="text" class="border p-2 w-full" />
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Author</label>
+      <input
+        v-model="form.postAuthor"
+        type="text"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        readonly
+        disabled
+      />
     </div>
 
     <div class="mb-4">
-      <label class="block mb-1">Description</label>
-      <input v-model="post.description" type="text" class="border p-2 w-full" />
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Description</label>
+      <input
+        v-model="form.description"
+        type="text"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+      />
     </div>
 
     <div class="mb-4">
-      <label class="block mb-1">Content</label>
-      <textarea v-model="post.content" class="border p-2 w-full" rows="5" required></textarea>
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Category</label>
+      <select
+        v-model="form.category"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+      >
+        <option>General</option>
+        <option>Technology</option>
+        <option>Business</option>
+        <option>Lifestyle</option>
+        <option>Travel</option>
+        <option>Health</option>
+      </select>
     </div>
 
     <div class="mb-4">
-      <label class="block mb-2 text-sm font-medium" for="file_input">Upload file</label>
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Content</label>
+      <textarea
+        v-model="form.content"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        rows="5"
+        required
+      ></textarea>
+    </div>
+
+    <div class="mb-4">
+      <label class="mb-2 block text-sm font-medium text-cyan-800" for="file_input"
+        >Upload image</label
+      >
       <input
         id="file_input"
+        ref="fileInputEl"
         type="file"
         @change="handleFileUpload"
-        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-        required
+        accept="image/*"
+        class="block w-full cursor-pointer rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700"
       />
 
       <div v-if="filePreview" class="mt-2">
-        <p class="text-gray-600 text-sm mb-1">Preview:</p>
-        <img :src="filePreview" alt="Preview" class="max-h-40 rounded shadow" />
+        <p class="mb-1 text-sm text-slate-600">Preview:</p>
+        <img
+          :src="filePreview"
+          alt="Preview"
+          class="max-h-40 rounded-lg border border-slate-200 shadow-sm"
+        />
       </div>
     </div>
 
     <div class="mb-4">
-      <select v-model="post.action" class="border p-2 w-full">
+      <label class="mb-1 block text-sm font-medium text-cyan-800">Visibility</label>
+      <select
+        v-model="form.action"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+      >
         <option>Save and Publish</option>
         <option>Save Draft</option>
       </select>
     </div>
 
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-      Add Post
-    </button>
+    <p
+      v-if="submitError"
+      class="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+    >
+      {{ submitError }}
+    </p>
+
+    <div class="flex items-center justify-end gap-3">
+      <button
+        type="button"
+        @click="cancel"
+        class="rounded-lg border border-cyan-200 px-4 py-2 text-sm font-medium text-cyan-800 transition hover:bg-cyan-50 cursor-pointer"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-700 px-4 py-2 text-sm font-semibold text-white transition hover:from-cyan-700 hover:to-cyan-800 cursor-pointer"
+      >
+        Add Post
+      </button>
+    </div>
   </form>
 </template>
