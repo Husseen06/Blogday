@@ -38,7 +38,7 @@ watch(() => route.path, checkLoginStatus)
       <button
         @click="menuOpen = !menuOpen"
         type="button"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-200 text-cyan-700 md:hidden"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 text-slate-800 md:hidden"
         aria-controls="main-nav"
         :aria-expanded="menuOpen"
       >
@@ -61,12 +61,12 @@ watch(() => route.path, checkLoginStatus)
       </button>
       <div id="main-nav" :class="['w-full md:block md:w-auto', menuOpen ? 'block' : 'hidden']">
         <ul
-          class="mt-4 flex flex-col gap-2 rounded-xl border border-cyan-100 bg-cyan-50/70 p-3 md:mt-0 md:flex-row md:items-center md:gap-3 md:border-0 md:bg-transparent md:p-0"
+          class="mt-4 flex flex-col gap-2 rounded-xl border border-slate-200 bg-slate-100/70 p-3 md:mt-0 md:flex-row md:items-center md:gap-3 md:border-0 md:bg-transparent md:p-0"
         >
           <li>
             <RouterLink
               to="/"
-              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-cyan-100 hover:text-cyan-800"
+              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Home
             </RouterLink>
@@ -74,7 +74,7 @@ watch(() => route.path, checkLoginStatus)
           <li>
             <RouterLink
               to="/other-posts"
-              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-cyan-100 hover:text-cyan-800"
+              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Other Posts
             </RouterLink>
@@ -82,7 +82,7 @@ watch(() => route.path, checkLoginStatus)
           <li>
             <RouterLink
               to="/about"
-              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-cyan-100 hover:text-cyan-800"
+              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               About
             </RouterLink>
@@ -90,7 +90,7 @@ watch(() => route.path, checkLoginStatus)
           <li v-if="!isLoggedIn">
             <RouterLink
               to="/login"
-              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-cyan-100 hover:text-cyan-800"
+              class="block rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Login
             </RouterLink>
@@ -98,7 +98,7 @@ watch(() => route.path, checkLoginStatus)
           <li v-if="!isLoggedIn">
             <RouterLink
               to="/register"
-              class="block rounded-md bg-gradient-to-r from-cyan-600 to-cyan-700 px-3 py-2 text-sm font-semibold text-white transition hover:from-cyan-700 hover:to-cyan-800"
+              class="block rounded-md bg-gradient-to-r from-slate-700 to-slate-800 px-3 py-2 text-sm font-semibold text-white transition hover:from-slate-800 hover:to-slate-900"
             >
               Register
             </RouterLink>
@@ -106,7 +106,7 @@ watch(() => route.path, checkLoginStatus)
           <li v-if="isLoggedIn">
             <button
               @click="logout"
-              class="block w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm font-semibold text-slate-700 transition hover:bg-cyan-100 hover:text-cyan-800"
+              class="block w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Logout
             </button>
@@ -116,3 +116,6 @@ watch(() => route.path, checkLoginStatus)
     </div>
   </nav>
 </template>
+
+
+

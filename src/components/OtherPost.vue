@@ -65,9 +65,9 @@ onMounted(loadPosts)
   <section class="py-12">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <header
-        class="mb-6 rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50/70 to-white p-6 shadow-sm"
+        class="mb-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-100/70 to-white p-6 shadow-sm"
       >
-        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">Blogday</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-800">Blogday</p>
         <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           Other Posts
         </h1>
@@ -84,8 +84,8 @@ onMounted(loadPosts)
           class="rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition"
           :class="
             selectedCategory === category
-              ? 'border-cyan-700 bg-cyan-700 text-white'
-              : 'border-cyan-200 bg-white text-slate-600 hover:border-cyan-500 hover:text-cyan-800'
+              ? 'border-slate-800 bg-slate-800 text-white'
+              : 'border-slate-300 bg-white text-slate-700 hover:border-slate-1000 hover:text-slate-900'
           "
         >
           {{ category }}
@@ -103,3 +103,6 @@ onMounted(loadPosts)
     </div>
   </section>
 </template>
+
+
+

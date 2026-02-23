@@ -82,19 +82,19 @@ const handleKeyPress = (e) => {
           <div v-if="editingCommentId === (comment.id || comment.ID)">
             <textarea
               v-model="editText"
-              class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
               rows="2"
             ></textarea>
             <div class="mt-2 flex gap-2">
               <button
                 @click="saveEdit(comment)"
-                class="text-xs font-medium text-cyan-600 hover:underline"
+                class="btn-edit text-xs font-medium text-slate-700 hover:underline"
               >
                 Save
               </button>
               <button
                 @click="cancelEditing"
-                class="text-xs font-medium text-slate-600 hover:underline"
+                class="text-xs font-medium text-slate-700 hover:underline"
               >
                 Cancel
               </button>
@@ -105,13 +105,13 @@ const handleKeyPress = (e) => {
             <div v-if="currentUser.firstName === comment.user_name" class="mt-2 flex gap-3">
               <button
                 @click="$emit('delete-comment', comment)"
-                class="text-xs font-medium text-rose-600 hover:text-rose-700 hover:underline cursor-pointer"
+                class="btn-delete text-xs font-medium text-slate-700 hover:text-slate-800 hover:underline cursor-pointer"
               >
                 Delete
               </button>
               <button
                 @click="startEditing(comment)"
-                class="text-xs font-medium text-cyan-600 hover:text-cyan-700 hover:underline cursor-pointer"
+                class="btn-edit text-xs font-medium text-slate-700 hover:text-slate-800 hover:underline cursor-pointer"
               >
                 Edit
               </button>
@@ -127,13 +127,13 @@ const handleKeyPress = (e) => {
         v-model="text"
         @keypress="handleKeyPress"
         placeholder="Write a comment..."
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
         rows="1"
       ></textarea>
 
       <button
         @click="submitComment"
-        class="rounded-lg bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-700 cursor-pointer"
+        class="btn-create rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-900 cursor-pointer"
       >
         Post
       </button>
@@ -148,3 +148,5 @@ const handleKeyPress = (e) => {
     </div>
   </div>
 </template>
+
+

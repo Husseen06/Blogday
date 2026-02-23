@@ -83,9 +83,9 @@ async function createAccount() {
   <section class="py-10 sm:py-14">
     <div class="mx-auto grid max-w-5xl gap-6 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:px-8">
       <div
-        class="rounded-3xl border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-sky-50 p-8 shadow-sm"
+        class="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-100 via-white to-slate-100 p-8 shadow-sm"
       >
-        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">Get Started</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-800">Get Started</p>
         <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-900">
           Create your Blogday account
         </h1>
@@ -93,18 +93,18 @@ async function createAccount() {
           Join our community to start sharing your stories and ideas with the world.
         </p>
         <div class="mt-6 space-y-3 text-sm text-slate-700">
-          <p class="rounded-xl border border-cyan-100 bg-white/70 p-3">
+          <p class="rounded-xl border border-slate-200 bg-white/70 p-3">
             Keep your credentials secure and use a strong password.
           </p>
         </div>
       </div>
 
-      <div class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm sm:p-8">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div class="mb-6 text-center">
           <h2 class="text-2xl font-semibold text-slate-800">Register</h2>
           <p class="mt-1 text-sm text-slate-600">
             Already have an account?
-            <RouterLink to="/login" class="font-medium text-cyan-600 hover:underline"
+            <RouterLink to="/login" class="font-medium text-slate-700 hover:underline"
               >Log in</RouterLink
             >
           </p>
@@ -121,7 +121,7 @@ async function createAccount() {
                 v-model="firstName"
                 type="text"
                 autocomplete="given-name"
-                class="w-full rounded-xl border border-cyan-100 px-3 py-2.5 text-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"
+                class="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
                 placeholder="Your first name"
               />
             </div>
@@ -132,7 +132,7 @@ async function createAccount() {
                 v-model.trim="email"
                 type="email"
                 autocomplete="email"
-                class="w-full rounded-xl border border-cyan-100 px-3 py-2.5 text-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"
+                class="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
                 placeholder="you@example.com"
               />
             </div>
@@ -145,7 +145,7 @@ async function createAccount() {
                 v-model="password"
                 type="password"
                 autocomplete="new-password"
-                class="w-full rounded-xl border border-cyan-100 px-3 py-2.5 text-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"
+                class="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
                 placeholder="Minimum 6 characters"
               />
             </div>
@@ -153,7 +153,7 @@ async function createAccount() {
           <button
             type="submit"
             :disabled="isLoading"
-            class="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-cyan-600 to-cyan-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:from-cyan-700 hover:to-cyan-800 disabled:cursor-not-allowed disabled:opacity-50"
+            class="btn-create inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-slate-700 to-slate-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:from-slate-800 hover:to-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {{ isLoading ? 'Please wait...' : 'Create account' }}
           </button>
@@ -164,8 +164,8 @@ async function createAccount() {
           :class="[
             'mt-4 rounded-xl border px-3 py-2 text-sm',
             statusType === 'error'
-              ? 'border-rose-200 bg-rose-50 text-rose-700'
-              : 'border-emerald-200 bg-emerald-50 text-emerald-700',
+              ? 'border-slate-300 bg-slate-100 text-slate-700'
+              : 'border-slate-300 bg-slate-100 text-slate-700',
           ]"
         >
           {{ statusMessage }}
@@ -174,3 +174,6 @@ async function createAccount() {
     </div>
   </section>
 </template>
+
+
+

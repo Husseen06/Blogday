@@ -160,14 +160,14 @@ const postContent = computed(() => post.value?.content || '')
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <button
         @click="router.back()"
-        class="mb-6 inline-flex items-center text-sm font-medium text-cyan-700 hover:text-cyan-800 hover:underline"
+        class="mb-6 inline-flex items-center text-sm font-medium text-slate-700 hover:text-slate-800 hover:underline"
       >
         &larr; Back
       </button>
 
       <div
         v-if="post"
-        class="overflow-hidden rounded-3xl border border-cyan-100 bg-white shadow-sm"
+        class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
       >
         <img
           v-if="postImage"
@@ -177,7 +177,7 @@ const postContent = computed(() => post.value?.content || '')
         />
         <div
           v-else
-          class="flex h-64 w-full items-center justify-center bg-cyan-50 text-cyan-400 sm:h-96"
+          class="flex h-64 w-full items-center justify-center bg-slate-50 text-slate-400 sm:h-96"
         >
           <span class="text-lg font-medium">No image available</span>
         </div>
@@ -186,7 +186,7 @@ const postContent = computed(() => post.value?.content || '')
           <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-4">
               <span
-                class="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-cyan-800"
+                class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-800"
               >
                 {{ isEditing ? 'Editing' : postCategory }}
               </span>
@@ -198,13 +198,13 @@ const postContent = computed(() => post.value?.content || '')
             <div v-if="currentUser.firstName === postAuthor && !isEditing" class="flex gap-3">
               <button
                 @click="enableEdit"
-                class="text-sm font-medium text-cyan-600 hover:text-cyan-700 hover:underline"
+                class="btn-edit text-sm font-medium text-slate-700 hover:text-slate-800 hover:underline"
               >
                 Edit
               </button>
               <button
                 @click="deletePost"
-                class="text-sm font-medium text-rose-600 hover:text-rose-700 hover:underline"
+                class="btn-delete text-sm font-medium text-slate-700 hover:text-slate-800 hover:underline"
               >
                 Delete
               </button>
@@ -216,14 +216,14 @@ const postContent = computed(() => post.value?.content || '')
               <label class="mb-1 block text-sm font-medium text-slate-700">Title</label>
               <input
                 v-model="editForm.title"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
               />
             </div>
             <div>
               <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
               <input
                 v-model="editForm.category"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
               />
             </div>
 
@@ -232,7 +232,7 @@ const postContent = computed(() => post.value?.content || '')
               <textarea
                 v-model="editForm.description"
                 rows="2"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
               ></textarea>
             </div>
             <div>
@@ -240,19 +240,19 @@ const postContent = computed(() => post.value?.content || '')
               <textarea
                 v-model="editForm.content"
                 rows="8"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500"
               ></textarea>
             </div>
             <div class="flex gap-3 pt-2">
               <button
                 @click="savePost"
-                class="rounded-lg bg-cyan-600 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-700"
+                class="btn-edit rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-900"
               >
                 Save Changes
               </button>
               <button
                 @click="cancelEdit"
-                class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200"
+                class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
               >
                 Cancel
               </button>
@@ -266,7 +266,7 @@ const postContent = computed(() => post.value?.content || '')
 
             <div class="mb-8 flex items-center gap-3 border-b border-slate-100 pb-8">
               <div
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 font-bold"
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-slate-700 font-bold"
               >
                 {{ postAuthor.charAt(0).toUpperCase() }}
               </div>
@@ -295,10 +295,12 @@ const postContent = computed(() => post.value?.content || '')
 
       <div v-else class="rounded-2xl border border-dashed border-slate-300 p-12 text-center">
         <p class="text-lg text-slate-500">Post not found.</p>
-        <button @click="router.push('/')" class="mt-4 text-cyan-600 hover:underline">
+        <button @click="router.push('/')" class="mt-4 text-slate-700 hover:underline">
           Go Home
         </button>
       </div>
     </div>
   </section>
 </template>
+
+

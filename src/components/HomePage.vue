@@ -80,10 +80,10 @@ onMounted(loadPosts)
   <section class="min-h-screen py-10">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <header
-        class="mb-8 grid gap-6 rounded-3xl border border-cyan-100 bg-gradient-to-br from-cyan-50/80 via-white to-sky-50/70 p-6 shadow-sm md:grid-cols-[1.2fr_1fr]"
+        class="mb-8 grid gap-6 rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-100/80 via-white to-slate-100/70 p-6 shadow-sm md:grid-cols-[1.2fr_1fr]"
       >
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-800">
             Welcome to Blogday
           </p>
           <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -97,13 +97,13 @@ onMounted(loadPosts)
             <span
               v-for="[name, count] in topCategories"
               :key="name"
-              class="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700"
+              class="rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800"
             >
               {{ name }} ({{ count }})
             </span>
             <span
               v-if="topCategories.length === 0"
-              class="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700"
+              class="rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800"
             >
               Start by creating your first category
             </span>
@@ -111,20 +111,20 @@ onMounted(loadPosts)
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="rounded-2xl border border-cyan-100 bg-white/80 p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-cyan-700">Total posts</p>
+          <div class="rounded-2xl border border-slate-200 bg-white/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-800">Total posts</p>
             <p class="mt-2 text-3xl font-bold text-slate-900">{{ posts.length }}</p>
           </div>
-          <div class="rounded-2xl border border-cyan-100 bg-white/80 p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-cyan-700">Featured</p>
+          <div class="rounded-2xl border border-slate-200 bg-white/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-800">Featured</p>
             <p class="mt-2 text-3xl font-bold text-slate-900">{{ featuredPosts.length }}</p>
           </div>
-          <div class="rounded-2xl border border-cyan-100 bg-white/80 p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-cyan-700">Published</p>
+          <div class="rounded-2xl border border-slate-200 bg-white/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-800">Published</p>
             <p class="mt-2 text-3xl font-bold text-slate-900">{{ publishedCount }}</p>
           </div>
-          <div class="rounded-2xl border border-cyan-100 bg-white/80 p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-cyan-700">Drafts</p>
+          <div class="rounded-2xl border border-slate-200 bg-white/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-800">Drafts</p>
             <p class="mt-2 text-3xl font-bold text-slate-900">{{ draftCount }}</p>
           </div>
         </div>
@@ -139,7 +139,8 @@ onMounted(loadPosts)
         </div>
         <button
           @click="showAddPost = !showAddPost"
-          class="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:from-cyan-700 hover:to-cyan-800 cursor-pointer"
+          :class="{ 'btn-create': !showAddPost }"
+          class="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-slate-700 to-slate-800 px-5 py-2.5 text-sm font-semibold text-white transition hover:from-slate-800 hover:to-slate-900 cursor-pointer"
         >
           {{ showAddPost ? 'Close Form' : 'Add Post' }}
         </button>
@@ -157,19 +158,19 @@ onMounted(loadPosts)
       />
 
       <div class="mt-6 grid gap-4 md:grid-cols-3">
-        <div class="rounded-2xl border border-cyan-100 bg-white p-5 shadow-sm">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 class="text-lg font-semibold text-slate-900">Write with categories</h3>
           <p class="mt-2 text-sm text-slate-600">
             Organize content into clear topics so readers can discover posts quickly.
           </p>
         </div>
-        <div class="rounded-2xl border border-cyan-100 bg-white p-5 shadow-sm">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 class="text-lg font-semibold text-slate-900">Keep top posts featured</h3>
           <p class="mt-2 text-sm text-slate-600">
             Your latest 3 posts are highlighted on the homepage automatically.
           </p>
         </div>
-        <div class="rounded-2xl border border-cyan-100 bg-white p-5 shadow-sm">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 class="text-lg font-semibold text-slate-900">Explore everything else</h3>
           <p class="mt-2 text-sm text-slate-600">
             All remaining posts live in Other Posts with category filtering.
@@ -179,3 +180,6 @@ onMounted(loadPosts)
     </div>
   </section>
 </template>
+
+
+

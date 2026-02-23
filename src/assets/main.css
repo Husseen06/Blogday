@@ -1,14 +1,81 @@
 @import 'tailwindcss';
 
 :root {
-  --brand-50: #ecfeff;
-  --brand-100: #cffafe;
-  --brand-500: #06b6d4;
-  --brand-600: #0891b2;
-  --brand-700: #0e7490;
+  --brand-50: #f8fafc;
+  --brand-100: #f1f5f9;
+  --brand-500: #64748b;
+  --brand-600: #475569;
+  --brand-700: #334155;
   --ink-900: #0f172a;
 }
 
 body {
   min-height: 100vh;
 }
+
+/* Accent colors only for labels and buttons */
+label {
+  color: #1d4ed8;
+}
+
+.btn-edit {
+  color: #2563eb !important;
+}
+
+.btn-edit:hover {
+  color: #1d4ed8 !important;
+}
+
+button.btn-edit[class*='bg-'],
+button.btn-edit[class*='from-'] {
+  color: #ffffff !important;
+  background-image: none !important;
+  background-color: #2563eb !important;
+}
+
+button.btn-edit[class*='bg-']:hover,
+button.btn-edit[class*='from-']:hover {
+  background-color: #1d4ed8 !important;
+}
+
+.btn-delete {
+  color: #dc2626 !important;
+}
+
+.btn-delete:hover {
+  color: #b91c1c !important;
+}
+
+button.btn-delete[class*='bg-'],
+button.btn-delete[class*='from-'] {
+  color: #ffffff !important;
+  background-image: none !important;
+  background-color: #dc2626 !important;
+}
+
+button.btn-delete[class*='bg-']:hover,
+button.btn-delete[class*='from-']:hover {
+  background-color: #b91c1c !important;
+}
+
+.btn-create {
+  color: #16a34a !important;
+}
+
+.btn-create:hover {
+  color: #15803d !important;
+}
+
+button.btn-create[class*='bg-'],
+button.btn-create[class*='from-'] {
+  color: #ffffff !important;
+  background-image: none !important;
+  background-color: #16a34a !important;
+}
+
+button.btn-create[class*='bg-']:hover,
+button.btn-create[class*='from-']:hover {
+  background-color: #15803d !important;
+}
+
+

@@ -91,15 +91,15 @@ function goToPost(id) {
 
 <template>
   <section class="py-4">
-    <div class="mb-8 rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
-      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">Overview</p>
+    <div class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-800">Overview</p>
       <h2 class="mt-2 text-2xl font-bold text-slate-900">{{ title }}</h2>
       <p v-if="subtitle" class="mt-2 text-sm text-slate-600">{{ subtitle }}</p>
       <p class="mt-2 text-sm font-medium text-slate-500">{{ totalPosts }} posts</p>
       <RouterLink
         v-if="showOtherPostsLink"
         to="/other-posts"
-        class="mt-3 inline-block text-sm font-semibold text-cyan-700 underline-offset-2 hover:underline"
+        class="mt-3 inline-block text-sm font-semibold text-slate-800 underline-offset-2 hover:underline"
       >
         Explore other posts
       </RouterLink>
@@ -114,14 +114,14 @@ function goToPost(id) {
 
     <div
       v-else-if="error"
-      class="rounded-xl border border-red-200 bg-red-50 px-4 py-8 text-center text-sm text-red-700"
+      class="rounded-xl border border-slate-300 bg-slate-100 px-4 py-8 text-center text-sm text-slate-700"
     >
       {{ error }}
     </div>
 
     <div
       v-else-if="totalPosts === 0"
-      class="rounded-xl border border-cyan-100 bg-white px-4 py-10 text-center text-slate-500"
+      class="rounded-xl border border-slate-200 bg-white px-4 py-10 text-center text-slate-500"
     >
       {{ emptyMessage }}
     </div>
@@ -130,7 +130,7 @@ function goToPost(id) {
       <article
         v-for="post in normalizedPosts"
         :key="post.id"
-        class="group overflow-hidden rounded-2xl border border-cyan-100 bg-white shadow-sm transition hover:-translate-y-1 hover:border-cyan-300 hover:shadow-md"
+        class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-slate-400 hover:shadow-md"
       >
         <div @click="goToPost(post.id)" class="cursor-pointer">
           <img
@@ -139,7 +139,7 @@ function goToPost(id) {
             alt="Post image"
             class="h-56 w-full object-cover"
           />
-          <div v-else class="flex h-56 w-full items-center justify-center bg-cyan-50 text-cyan-400">
+          <div v-else class="flex h-56 w-full items-center justify-center bg-slate-100 text-slate-500">
             <span class="text-sm font-medium">No image</span>
           </div>
         </div>
@@ -149,12 +149,12 @@ function goToPost(id) {
             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
               {{ formattedDate(post.postDate) }}
             </p>
-            <span class="rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-semibold text-cyan-800">
+            <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-900">
               {{ post.category }}
             </span>
           </div>
           <h3
-            class="mb-2 cursor-pointer text-xl font-semibold text-slate-900 transition hover:text-cyan-700"
+            class="mb-2 cursor-pointer text-xl font-semibold text-slate-900 transition hover:text-slate-800"
             @click="goToPost(post.id)"
           >
             {{ post.postTitle }}
@@ -169,3 +169,4 @@ function goToPost(id) {
     </div>
   </section>
 </template>
+

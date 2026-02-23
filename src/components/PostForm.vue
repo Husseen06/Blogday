@@ -92,21 +92,21 @@ const cancel = () => {
 </script>
 
 <template>
-  <form @submit.prevent="addPost" class="rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
+  <form @submit.prevent="addPost" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
     <h2 class="mb-6 text-2xl font-bold text-slate-900">Add New Post</h2>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Title</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Post Title</label>
       <input
         v-model="form.postTitle"
         type="text"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none ring-0 transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none ring-0 transition focus:border-slate-500"
         required
       />
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Date</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Post Date</label>
       <input
         v-model="form.postDate"
         type="date"
@@ -117,30 +117,30 @@ const cancel = () => {
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Post Author</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Post Author</label>
       <input
         v-model="form.postAuthor"
         type="text"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-slate-500"
         readonly
         disabled
       />
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Description</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Description</label>
       <input
         v-model="form.description"
         type="text"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-slate-500"
       />
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Category</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Category</label>
       <select
         v-model="form.category"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-slate-500"
       >
         <option>General</option>
         <option>Technology</option>
@@ -152,17 +152,17 @@ const cancel = () => {
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Content</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Content</label>
       <textarea
         v-model="form.content"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-slate-500"
         rows="5"
         required
       ></textarea>
     </div>
 
     <div class="mb-4">
-      <label class="mb-2 block text-sm font-medium text-cyan-800" for="file_input"
+      <label class="mb-2 block text-sm font-medium text-slate-900" for="file_input"
         >Upload image</label
       >
       <input
@@ -185,10 +185,10 @@ const cancel = () => {
     </div>
 
     <div class="mb-4">
-      <label class="mb-1 block text-sm font-medium text-cyan-800">Visibility</label>
+      <label class="mb-1 block text-sm font-medium text-slate-900">Visibility</label>
       <select
         v-model="form.action"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-cyan-500"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-slate-500"
       >
         <option>Save and Publish</option>
         <option>Save Draft</option>
@@ -197,7 +197,7 @@ const cancel = () => {
 
     <p
       v-if="submitError"
-      class="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+      class="mb-4 rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 text-sm text-slate-700"
     >
       {{ submitError }}
     </p>
@@ -206,16 +206,19 @@ const cancel = () => {
       <button
         type="button"
         @click="cancel"
-        class="rounded-lg border border-cyan-200 px-4 py-2 text-sm font-medium text-cyan-800 transition hover:bg-cyan-50 cursor-pointer"
+        class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-100 cursor-pointer"
       >
         Cancel
       </button>
       <button
         type="submit"
-        class="rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-700 px-4 py-2 text-sm font-semibold text-white transition hover:from-cyan-700 hover:to-cyan-800 cursor-pointer"
+        class="btn-create rounded-lg bg-gradient-to-r from-slate-700 to-slate-800 px-4 py-2 text-sm font-semibold text-white transition hover:from-slate-800 hover:to-slate-900 cursor-pointer"
       >
         Add Post
       </button>
     </div>
   </form>
 </template>
+
+
+
